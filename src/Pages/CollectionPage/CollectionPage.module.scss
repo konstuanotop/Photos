@@ -1,0 +1,26 @@
+.CollectionPage {
+    display: flex;
+    flex-direction: column;
+    width: 850px;
+    margin-top: 10px;
+
+
+    &__title {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+
+    &__navigate {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    &__loading {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+}
