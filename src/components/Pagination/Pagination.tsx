@@ -1,17 +1,14 @@
 import styles from './Pagination.module.scss'
-import { Dispatch, SetStateAction } from 'react';
 
 interface PaginationProps {
     pageNumber: number;
-    setPageNumber: Dispatch<SetStateAction<number>>;
-    setIsLoading: Dispatch<SetStateAction<boolean>>;
+    onChangePage: (i: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ pageNumber, setPageNumber, setIsLoading }) => {
+const Pagination: React.FC<PaginationProps> = ({ pageNumber, onChangePage }) => {
 
-    const handlePage = (i: number) => {
-        setPageNumber(i + 1)
-        setIsLoading(true)
+    const onClickPage = (i: number) => {
+        onChangePage(i)
     }
 
     return (
@@ -21,8 +18,8 @@ const Pagination: React.FC<PaginationProps> = ({ pageNumber, setPageNumber, setI
                     [...Array(3)].map((_, i) => (
                         <li
                             key={i}
-                            onClick={(e) => handlePage(i)}
-                            className={styles.Pagination__items_item}>
+                            onClick={(e) => onClickPage(i)}
+                            className={`${pageNumber === i + 1 ? styles.Pagination__items_item_active : styles.Pagination__items_item}`}>
                             {i + 1}
                         </li>
                     ))

@@ -19,5 +19,11 @@
                 color: #fff;
             }
         }
+
+        &_item_active {
+            @extend .Category__list_item;
+            background-color: #000;
+            color: #fff;
+        }
     }
 }

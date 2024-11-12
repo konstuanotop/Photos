@@ -1,19 +1,16 @@
 import styles from './Category.module.scss'
 import { Categories } from '../../types'
-import { Dispatch, SetStateAction } from 'react';
 
 interface CategoryProps {
     categories: Categories[];
     categoryId: number;
-    setCategoryId: Dispatch<SetStateAction<number>>;
-    setIsLoading: Dispatch<SetStateAction<boolean>>;
+    onCategory: (i: number) => void;
 }
 
-const Category: React.FC<CategoryProps> = ({ categories, setCategoryId, setIsLoading }) => {
+const Category: React.FC<CategoryProps> = ({ categories, categoryId, onCategory }) => {
 
-    const handleCategory = (i: number) => {
-        setCategoryId(i)
-        setIsLoading(true)
+    const onClickCategory = (i: number) => {
+        onCategory(i)
     }
 
     return (
@@ -23,8 +20,8 @@ const Category: React.FC<CategoryProps> = ({ categories, setCategoryId, setIsLoa
                     categories.map((category, i) => (
                         <li
                             key={i}
-                            className={styles.Category__list_item}
-                            onClick={(e) => handleCategory(i)}
+                            className={`${categoryId === i ? styles.Category__list_item_active : styles.Category__list_item}`}
+                            onClick={(e) => onClickCategory(i)}
                         >{category.name}</li>
                     ))
                 }

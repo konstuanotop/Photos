@@ -1,19 +1,20 @@
-import { Dispatch, SetStateAction } from 'react';
 import styles from './Search.module.scss'
 
 interface SearchProps {
     value: string;
-    setValue: Dispatch<SetStateAction<string>>;
+
+    onChangeSearch: (value: string) => void;
 }
 
-const Search: React.FC<SearchProps> = ({ value, setValue }) => {
+const Search: React.FC<SearchProps> = ({ value, onChangeSearch }) => {
+
     return (
         <div className={styles.Search}>
             <input
                 className={styles.Search__input}
                 placeholder='Поиск...'
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => onChangeSearch(e.target.value)}
             />
         </div>
     )

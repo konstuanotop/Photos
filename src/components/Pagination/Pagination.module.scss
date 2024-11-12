@@ -22,5 +22,11 @@
                 margin-right: 15px;
             }
         }
+
+        &_item_active {
+            @extend .Pagination__items_item;
+            color: #fff;
+            background-color: #000;
+        }
     }
 }

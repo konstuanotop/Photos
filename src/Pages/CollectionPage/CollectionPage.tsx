@@ -5,13 +5,14 @@ import Search from '../../components/Search/Search'
 import PhotosCard from '../../components/PhotosCard/PhotosCard'
 import { Data } from '../../types'
 import Pagination from '../../components/Pagination/Pagination'
+import { CollectionService } from '../../services/reqres/collection'
 
 const CollectionPage = () => {
 
     const [data, setData] = useState<Data[]>([])
     const [value, setValue] = useState('')
     const [categoryId, setCategoryId] = useState(0)
-    const [pageNumber, setPageNumber] = useState(0)
+    const [pageNumber, setPageNumber] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
 
     const categories = [
@@ -23,28 +24,42 @@ const CollectionPage = () => {
     ]
 
     useEffect(() => {
-        fetch(`https://3de40168895133a4.mokky.dev/photo_collections?page=${pageNumber}&limit=4&${categoryId ? `category=${categoryId}` : ''}`)
-            .then((res) => res.json())
+        CollectionService.getCollection({ pageNumber, categoryId })
             .then((json) => {
                 setData(json.items)
                 setIsLoading(false)
             })
     }, [categoryId, pageNumber, isLoading])
 
+    const handleCategory = (i: number) => {
+        setCategoryId(i)
+        setIsLoading(true)
+    }
+
+    const handleChangeSearch = (newValue: string) => {
+        setValue(newValue);
+    }
+
+    const handleChangePage = (i: number) => {
+        setPageNumber(i + 1)
+        setIsLoading(true)
+    }
+
+
     return (
         <div className={styles.CollectionPage}>
             <h1 className={styles.CollectionPage__title}>Моя коллекция фотографий</h1>
             <div className={styles.CollectionPage__navigate}>
-                <Category categories={categories} categoryId={categoryId} setCategoryId={setCategoryId} setIsLoading={setIsLoading} />
-                <Search value={value} setValue={setValue} />
+                <Category categories={categories} categoryId={categoryId} onCategory={handleCategory} />
+                <Search value={value} onChangeSearch={handleChangeSearch} />
             </div>
             {
                 isLoading ?
-                    <div className={styles.CollectionPage__loading}>...Загрузка</div>
+                    <div className={styles.CollectionPage__loader}></div>
                     :
                     <PhotosCard data={data} value={value} />
             }
-            <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} setIsLoading={setIsLoading} />
+            <Pagination pageNumber={pageNumber} onChangePage={handleChangePage} />
         </div>
     )
 }
