@@ -11,3 +11,6 @@
 - Условный рендер
 - Пагинация
 - Работа с Api
+
+  
+![Photos](https://github.com/user-attachments/assets/3494f381-a8c2-426b-9fc2-642ed6574b39)
